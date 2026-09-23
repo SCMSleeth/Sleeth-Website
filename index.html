@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sleeth Credit Management Limited</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --primary: #0284c7;
+      --primary-light: #0ea5e9;
+      --accent: #38bdf8;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f1f5f9;
+      color: var(--text-main);
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    header {
+      background: var(--bg);
+      color: #fff;
+      padding: 0.9rem 8vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header img {
+      height: 60px;
+    }
+    nav a {
+      margin-left: 1.5rem;
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: #e5e7eb;
+    }
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    .hero {
+      padding: 4.5rem 8vw 4rem;
+      background: radial-gradient(circle at top left, var(--primary-light), var(--bg));
+      color: #fff;
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+      gap: 3rem;
+      align-items: center;
+    }
+    .hero h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+    }
+    .hero h1 span {
+      color: var(--accent);
+    }
+    .hero p {
+      max-width: 580px;
+      line-height: 1.7;
+      font-size: 1.02rem;
+    }
+    .hero-highlight {
+      margin-top: 1.2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.95rem;
+    }
+    .hero-highlight span {
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.4);
+    }
+    .hero-actions {
+      margin-top: 1.8rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #0f172a;
+      padding: 0.9rem 1.6rem;
+      border-radius: 999px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      font-size: 0.98rem;
+    }
+    .btn-secondary {
+      background: transparent;
+      color: #e5e7eb;
+      padding: 0.9rem 1.4rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    .hero-aside {
+      background: rgba(15, 23, 42, 0.85);
+      border-radius: 16px;
+      padding: 1.8rem 1.6rem;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+    }
+    .hero-aside h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+    .hero-aside p {
+      font-size: 0.95rem;
+      color: #cbd5f5;
+      line-height: 1.6;
+    }
+    .hero-aside-list {
+      margin-top: 1.2rem;
+      display: grid;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+    }
+    .hero-aside-list div {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .hero-aside-badge {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .section {
+      padding: 3.5rem 8vw;
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .section-header h2 {
+      font-size: 1.9rem;
+      margin: 0;
+    }
+    .section-header p {
+      max-width: 520px;
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      line-height: 1.6;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.6fr);
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 1.6rem 1.5rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+    }
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 0.8rem;
+      font-size: 1.2rem;
+    }
+    .card p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.96rem;
+      line-height: 1.6;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.6rem;
+      margin-top: 0.5rem;
+    }
+    .service-card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.4rem;
+      color: var(--primary);
+    }
+    .service-card p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.4rem;
+      margin-top: 0.8rem;
+    }
+    .process-step {
+      background: #0f172a;
+      color: #e5e7eb;
+      border-radius: 12px;
+      padding: 1.2rem 1.1rem;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+    }
+    .process-step h3 {
+      margin: 0 0 0.4rem;
+      font-size: 0.98rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+    }
+    .process-step p {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.4rem;
+      margin-top: 0.8rem;
+    }
+    .benefit {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.3rem 1.2rem;
+      border: 1px solid var(--border);
+    }
+    .benefit h3 {
+      margin: 0 0 0.4rem;
+      font-size: 1rem;
+      color: var(--primary);
+    }
+    .benefit p {
+      margin: 0;
+      font-size: 0.94rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.4fr);
+      gap: 2.5rem;
+      align-items: start;
+    }
+    form {
+      background: var(--card-bg);
+      padding: 2rem 1.8rem;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+    }
+    form h3 {
+      margin-top: 0;
+      margin-bottom: 0.6rem;
+      font-size: 1.2rem;
+    }
+    form p {
+      margin-top: 0;
+      margin-bottom: 1.4rem;
+      font-size: 0.94rem;
+      color: var(--text-muted);
+    }
+    form input,
+    form textarea {
+      width: 100%;
+      padding: 0.85rem 0.9rem;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 0.96rem;
+      font-family: inherit;
+      resize: vertical;
+    }
+    form input:focus,
+    form textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px rgba(2, 132, 199, 0.25);
+    }
+    form button {
+      background: var(--primary);
+      color: #fff;
+      padding: 0.9rem 1.6rem;
+      border-radius: 999px;
+      border: none;
+      font-size: 0.98rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    form button:hover {
+      background: var(--primary-light);
+    }
+
+    .contact-info {
+      padding: 1.6rem 0;
+    }
+    .contact-info h3 {
+      margin-top: 0;
+      margin-bottom: 0.8rem;
+      font-size: 1.2rem;
+    }
+    .contact-info p {
+      margin: 0.2rem 0;
+      font-size: 0.96rem;
+      color: var(--text-muted);
+    }
+    .contact-info strong {
+      color: var(--text-main);
+    }
+
+    footer {
+      background: var(--bg);
+      color: #9ca3af;
+      padding: 1.6rem 8vw;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer span {
+      display: block;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .hero-aside {
+        margin-top: 1.5rem;
+      }
+      .two-column,
+      .contact-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+      }
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+      }
+      nav a {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <img src="sleeth-logo.png" alt="Sleeth Credit Management Logo">
+  <nav>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#process">Process</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div>
+    <h1><span>Sleeth Credit Management</span><br>Professional Door‑to‑Door Debt Recovery</h1>
+    <p>
+      Sleeth Credit Management Limited provides a specialist, face‑to‑face collections service for businesses
+      that need decisive action on overdue accounts. We represent your brand professionally while securing
+      payment and strengthening your internal processes.
+    </p>
+    <div class="hero-highlight">
+      <span>Door‑to‑door collections</span>
+      <span>Business‑to‑business & consumer</span>
+      <span>Process investigation & improvement</span>
+      <span>Professional, reliable, effective</span>
+    </div>
+    <div class="hero-actions">
+      <a href="#contact"><button class="btn-primary">Request a Call Back</button></a>
+      <a href="#services"><button class="btn-secondary">View Our Services</button></a>
+    </div>
+  </div>
+  <div class="hero-aside">
+    <h2>Focused on Cashflow & Control</h2>
+    <p>
+      We combine doorstep collections with a structured review of how your organisation manages credit,
+      invoices, and escalation. The result is improved recovery today and stronger processes for tomorrow.
+    </p>
+    <div class="hero-aside-list">
+      <div><span class="hero-aside-badge"></span> Face‑to‑face debtor engagement</div>
+      <div><span class="hero-aside-badge"></span> Clear, professional communication</div>
+      <div><span class="hero-aside-badge"></span> Tailored strategies for each client</div>
+      <div><span class="hero-aside-badge"></span> Robust, long‑term process improvements</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="section-header">
+    <h2>About Sleeth Credit Management Limited</h2>
+    <p>
+      We work with businesses that need more than letters and emails. Our approach is built around direct,
+      respectful doorstep contact with debtors, combined with a structured review of your internal processes
+      to reduce future exposure and strengthen your cashflow.
+    </p>
+  </div>
+  <div class="two-column">
+    <div class="card">
+      <h3>Who We Work With</h3>
+      <p>
+        We support SMEs and larger organisations across sectors including trade, services, and professional
+        firms. Whether you have a small number of high‑value accounts or a larger volume of overdue invoices,
+        we provide a tailored, hands‑on approach to collections.
+      </p>
+    </div>
+    <div class="card">
+      <h3>How We Represent You</h3>
+      <p>
+        Every visit is conducted with professionalism and respect. We act as an extension of your business,
+        protecting your reputation while clearly communicating expectations, options, and consequences to
+        debtors. Our aim is to secure payment while maintaining commercial relationships wherever possible.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="section-header">
+    <h2>Core Services</h2>
+    <p>
+      Our services are designed to deliver immediate recovery on overdue accounts and build stronger
+      processes inside your organisation. We focus on practical, real‑world outcomes that improve cashflow
+      and reduce the risk of repeat issues.
+    </p>
+  </div>
+  <div class="services-grid">
+    <div class="card service-card">
+      <h3>Doorstep Debt Collections</h3>
+      <p>
+        Direct, face‑to‑face visits to debtors to discuss outstanding balances, agree payment plans, and
+        secure settlement. Ideal where written communication has failed to achieve results.
+      </p>
+    </div>
+    <div class="card service-card">
+      <h3>Payment Negotiation & Arrangements</h3>
+      <p>
+        Structured negotiation of realistic payment terms, including staged payments and agreed deadlines,
+        aligned with your policies and commercial objectives.
+      </p>
+    </div>
+    <div class="card service-card">
+      <h3>Company Process Investigation</h3>
+      <p>
+        We investigate your company’s internal processes end‑to‑end — from invoice issue and credit control
+        through to escalation and write‑off — identifying weaknesses, gaps, and inefficiencies.
+      </p>
+    </div>
+    <div class="card service-card">
+      <h3>Process Strengthening & Recommendations</h3>
+      <p>
+        Clear, practical recommendations to make your procedures more robust, reduce unpaid invoices, and
+        improve the consistency and effectiveness of your collections activity.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="process">
+  <div class="section-header">
+    <h2>How We Work With You</h2>
+    <p>
+      Our engagement model is straightforward and transparent. We focus on understanding your situation,
+      acting decisively on overdue accounts, and leaving you with stronger processes than when we started.
+    </p>
+  </div>
+  <div class="process-steps">
+    <div class="process-step">
+      <h3>01 • Initial Review</h3>
+      <p>
+        We discuss your current position, outstanding accounts, and existing credit control procedures to
+        understand your priorities and constraints.
+      </p>
+    </div>
+    <div class="process-step">
+      <h3>02 • Process Investigation</h3>
+      <p>
+        We examine how invoices are raised, chased, escalated, and closed, identifying gaps, delays, and
+        risks that impact recovery.
+      </p>
+    </div>
+    <div class="process-step">
+      <h3>03 • Doorstep Collections</h3>
+      <p>
+        We conduct targeted, professional visits to debtors to secure payment, agree arrangements, and
+        reinforce the seriousness of non‑payment.
+      </p>
+    </div>
+    <div class="process-step">
+      <h3>04 • Recommendations & Follow‑Up</h3>
+      <p>
+        You receive clear recommendations to strengthen your processes, along with feedback from visits and
+        agreed next steps.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <h2>Why Businesses Choose Sleeth Credit Management</h2>
+    <p>
+      Our clients choose us because we combine decisive doorstep action with a structured, business‑focused
+      review of how credit is managed internally. The result is better recovery today and fewer problems
+      tomorrow.
+    </p>
+  </div>
+  <div class="benefits-grid">
+    <div class="benefit">
+      <h3>Face‑to‑Face Impact</h3>
+      <p>
+        Doorstep collections create a level of urgency and engagement that written communication alone
+        rarely achieves, while remaining professional and respectful.
+      </p>
+    </div>
+    <div class="benefit">
+      <h3>Process‑Driven Approach</h3>
+      <p>
+        We don’t just chase debts — we help you build stronger systems so that fewer accounts reach the
+        overdue stage in the first place.
+      </p>
+    </div>
+    <div class="benefit">
+      <h3>Clear, Business‑Focused Reporting</h3>
+      <p>
+        You receive clear updates on activity, outcomes, and recommended changes, enabling better decisions
+        and governance around credit and collections.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="section-header">
+    <h2>Contact Sleeth Credit Management Limited</h2>
+    <p>
+      If you would like to discuss overdue accounts, process investigation, or a specific situation, please
+      complete the form below. We will review your enquiry and respond promptly.
+    </p>
+  </div>
+  <div class="contact-layout">
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <h3>Send Us an Enquiry</h3>
+      <p>Provide a brief overview of your situation and we will contact you to discuss options.</p>
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <input type="text" name="company" placeholder="Company Name (optional)">
+      <textarea name="message" rows="5" placeholder="Outline your requirements, overdue accounts, or process concerns." required></textarea>
+      <button type="submit">Submit Enquiry</button>
+    </form>
+
+    <div class="contact-info">
+      <h3>Business Details</h3>
+      <p><strong>Phone:</strong> 07719 368935</p>
+      <p><strong>Email:</strong> management@screditmanagement.com</p>
+      <p><strong>Company Name:</strong> Sleeth Credit Management Limited</p>
+      <p><strong>Company Registration:</strong> 17377548</p>
+      <p><strong>Domain:</strong> sleethcreditmanagement.co.uk</p>
+      <p style="margin-top:1rem; font-size:0.9rem; color:var(--text-muted);">
+        Professional • Reliable • Effective — focused on door‑to‑door collections and robust internal processes.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Sleeth Credit Management Limited. All rights reserved.</span>
+  <span>Professional • Reliable • Effective • Door‑to‑Door Collections & Process Investigation.</span>
+</footer>
+
+</body>
+</html>
